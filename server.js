@@ -5,7 +5,6 @@ const fs = require('fs');
 const cors = require('cors');
 
 const app = express();
-app.set('trust proxy', true); // detecta https/host reais atrás de proxy (hospedagem)
 app.use(cors());
 app.use(express.json());
 
@@ -30,13 +29,8 @@ app.use(express.static(path.join(__dirname, 'public'), {
 const DOWNLOAD_DIR = path.join(__dirname, 'public', 'downloads');
 if (!fs.existsSync(DOWNLOAD_DIR)) fs.mkdirSync(DOWNLOAD_DIR, { recursive: true });
 
-// Caminhos dos binários. O build.sh baixa ffmpeg e yt-dlp para ./bin.
-// Se existirem lá, usa-os; senão cai pro PATH do sistema (ambiente local).
-const LOCAL_BIN = path.join(__dirname, 'bin');
-const YTDLP  = process.env.YTDLP_PATH ||
-  (fs.existsSync(path.join(LOCAL_BIN, 'yt-dlp')) ? path.join(LOCAL_BIN, 'yt-dlp') : 'yt-dlp');
-const FFMPEG = process.env.FFMPEG_PATH ||
-  (fs.existsSync(path.join(LOCAL_BIN, 'ffmpeg')) ? path.join(LOCAL_BIN, 'ffmpeg') : 'ffmpeg');
+const YTDLP  = '/usr/local/bin/yt-dlp';
+const FFMPEG = '/usr/local/bin/ffmpeg';
 
 function cleanOldFiles() {
   const now = Date.now();
@@ -65,12 +59,7 @@ app.post('/api/shorten', (req, res) => {
   let code = randomCode();
   while (urlMap[code]) code = randomCode(); // garante único
   urlMap[code] = url;
-
-  // Monta o link curto com o domínio real de quem acessou (funciona tanto em
-  // localhost quanto no domínio publicado). Respeita proxy reverso (x-forwarded-*).
-  const proto = (req.headers['x-forwarded-proto'] || req.protocol || 'http').split(',')[0].trim();
-  const host  = req.headers['x-forwarded-host'] || req.get('host');
-  res.json({ short: `${proto}://${host}/r/${code}` });
+  res.json({ short: `http://localhost:3737/r/${code}` });
 });
 
 app.get('/r/:code', (req, res) => {
