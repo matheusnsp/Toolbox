@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: toolbox
+    runtime: node
+    plan: free
+    buildCommand: bash build.sh
+    startCommand: node server.js
+    envVars:
+      - key: NODE_VERSION
+        value: "20"

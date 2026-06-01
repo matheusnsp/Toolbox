@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Toolbox</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="wrap">
+
+<!-- HEADER -->
+<div class="header">
+<div class="logo">
+<div class="logo-icon">🧰</div>
+<span class="logo-name">Toolbox</span>
+</div>
+<h1>Todas as ferramentas<br>que você precisa.</h1>
+<p class="subtitle">Um só lugar para tudo que você usa no dia a dia.</p>
+<div class="search-wrap">
+<span class="search-icon">🔍</span>
+<input class="search-input" id="searchInput" type="text"
+placeholder="Procurar ferramenta... (ex: youtube, link, pdf)"
+oninput="filterTools()">
+</div>
+</div>
+
+<!-- FEATURED -->
+<div class="featured" id="featuredSection">
+<div class="feat-card purple" onclick="openModal('yt')">
+<div class="feat-icon-wrap">🎬</div>
+<div class="feat-title">Download do YouTube</div>
+<div class="feat-desc">Baixe vídeos em MP4 ou extraia áudio em MP3 com a melhor qualidade.</div>
+<button class="feat-btn">Usar →</button>
+</div>
+<div class="feat-card blue" onclick="openModal('short')">
+<div class="feat-icon-wrap">🔗</div>
+<div class="feat-title">Encurtador de Links</div>
+<div class="feat-desc">Crie URLs curtas e fáceis de compartilhar em segundos.</div>
+<button class="feat-btn">Usar →</button>
+</div>
+<div class="feat-card cyan" onclick="openModal('conv')">
+<div class="feat-icon-wrap">🔄</div>
+<div class="feat-title">Conversor de Arquivos</div>
+<div class="feat-desc">Imagens, vídeo, áudio, documentos, fontes e dados — tudo aqui.</div>
+<button class="feat-btn">Usar →</button>
+</div>
+</div>
+
+<!-- CATEGORY TABS -->
+<div class="cat-tabs" id="catTabs">
+<button class="cat-btn on" data-cat="all"   onclick="filterCat('all')">Todas</button>
+<button class="cat-btn"    data-cat="media" onclick="filterCat('media')">Mídia</button>
+<button class="cat-btn"    data-cat="links" onclick="filterCat('links')">Links</button>
+<button class="cat-btn"    data-cat="files" onclick="filterCat('files')">Arquivos</button>
+<button class="cat-btn"    data-cat="utils" onclick="filterCat('utils')">Utilidades</button>
+</div>
+
+<!-- TOOL GRID -->
+<div class="tool-grid" id="toolGrid"></div>
+
+</div>
+
+<!-- MODAL OVERLAY -->
+<div class="overlay" id="overlay" onclick="closeOnBg(event)">
+<div class="modal" id="modal">
+<div class="modal-header">
+<div class="modal-title">
+<span class="ico" id="modalIco"></span>
+<h2 id="modalTitle"></h2>
+</div>
+<button class="modal-close" onclick="closeModal()">✕</button>
+</div>
+<div class="modal-body" id="modalBody"></div>
+</div>
+</div>
+
+<!-- Tools (cada ferramenta em seu próprio arquivo) -->
+<script src="tools/youtube.js"></script>
+<script src="tools/shortener.js"></script>
+<script src="tools/qr.js"></script>
+<script src="tools/lorem.js"></script>
+<script src="tools/chars.js"></script>
+<script src="tools/converter.js"></script>
+<script src="tools/optimize.js"></script>
+<script src="tools/transcribe.js"></script>
+<script src="tools/code.js"></script>
+<script src="tools/base64.js"></script>
+<script src="tools/password.js"></script>
+<script src="tools/hash.js"></script>
+
+<!-- App core (data, grid, modal, filtros, utils) -->
+<script src="app.js"></script>
+
+</body>
+</html>
